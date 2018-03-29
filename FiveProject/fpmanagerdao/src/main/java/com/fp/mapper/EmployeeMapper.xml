@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fp.dao.EmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.fp.pojo.Employee">
+    <id column="employee_id" jdbcType="DOUBLE" property="employeeId" />
+    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
+    <result column="employee_gender" jdbcType="VARCHAR" property="employeeGender" />
+    <result column="employee_birth" jdbcType="TIMESTAMP" property="employeeBirth" />
+    <result column="employee_ID_card" jdbcType="VARCHAR" property="employeeIdCard" />
+    <result column="employee_native_place" jdbcType="VARCHAR" property="employeeNativePlace" />
+    <result column="employee_department" jdbcType="VARCHAR" property="employeeDepartment" />
+    <result column="employee_tel" jdbcType="DOUBLE" property="employeeTel" />
+    <result column="employee_post" jdbcType="VARCHAR" property="employeePost" />
+    <result column="employee_entrytime" jdbcType="TIMESTAMP" property="employeeEntrytime" />
+    <result column="employee_wage" jdbcType="DOUBLE" property="employeeWage" />
+    <result column="employee_remark" jdbcType="VARCHAR" property="employeeRemark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    employee_id, employee_name, employee_gender, employee_birth, employee_ID_card, employee_native_place, 
+    employee_department, employee_tel, employee_post, employee_entrytime, employee_wage, 
+    employee_remark
+  </sql>
+  <select id="selectByExample" parameterType="com.fp.pojo.EmployeeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from employee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Double" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where employee_id = #{employeeId,jdbcType=DOUBLE}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Double">
+    delete from employee
+    where employee_id = #{employeeId,jdbcType=DOUBLE}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fp.pojo.EmployeeExample">
+    delete from employee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fp.pojo.Employee">
+    insert into employee (employee_id, employee_name, employee_gender, 
+      employee_birth, employee_ID_card, employee_native_place, 
+      employee_department, employee_tel, employee_post, 
+      employee_entrytime, employee_wage, employee_remark
+      )
+    values (#{employeeId,jdbcType=DOUBLE}, #{employeeName,jdbcType=VARCHAR}, #{employeeGender,jdbcType=VARCHAR}, 
+      #{employeeBirth,jdbcType=TIMESTAMP}, #{employeeIdCard,jdbcType=VARCHAR}, #{employeeNativePlace,jdbcType=VARCHAR}, 
+      #{employeeDepartment,jdbcType=VARCHAR}, #{employeeTel,jdbcType=DOUBLE}, #{employeePost,jdbcType=VARCHAR}, 
+      #{employeeEntrytime,jdbcType=TIMESTAMP}, #{employeeWage,jdbcType=DOUBLE}, #{employeeRemark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fp.pojo.Employee">
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="employeeName != null">
+        employee_name,
+      </if>
+      <if test="employeeGender != null">
+        employee_gender,
+      </if>
+      <if test="employeeBirth != null">
+        employee_birth,
+      </if>
+      <if test="employeeIdCard != null">
+        employee_ID_card,
+      </if>
+      <if test="employeeNativePlace != null">
+        employee_native_place,
+      </if>
+      <if test="employeeDepartment != null">
+        employee_department,
+      </if>
+      <if test="employeeTel != null">
+        employee_tel,
+      </if>
+      <if test="employeePost != null">
+        employee_post,
+      </if>
+      <if test="employeeEntrytime != null">
+        employee_entrytime,
+      </if>
+      <if test="employeeWage != null">
+        employee_wage,
+      </if>
+      <if test="employeeRemark != null">
+        employee_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DOUBLE},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeGender != null">
+        #{employeeGender,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeBirth != null">
+        #{employeeBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employeeIdCard != null">
+        #{employeeIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNativePlace != null">
+        #{employeeNativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeDepartment != null">
+        #{employeeDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeTel != null">
+        #{employeeTel,jdbcType=DOUBLE},
+      </if>
+      <if test="employeePost != null">
+        #{employeePost,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeEntrytime != null">
+        #{employeeEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employeeWage != null">
+        #{employeeWage,jdbcType=DOUBLE},
+      </if>
+      <if test="employeeRemark != null">
+        #{employeeRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fp.pojo.EmployeeExample" resultType="java.lang.Long">
+    select count(*) from employee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update employee
+    <set>
+      <if test="record.employeeId != null">
+        employee_id = #{record.employeeId,jdbcType=DOUBLE},
+      </if>
+      <if test="record.employeeName != null">
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeGender != null">
+        employee_gender = #{record.employeeGender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeBirth != null">
+        employee_birth = #{record.employeeBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.employeeIdCard != null">
+        employee_ID_card = #{record.employeeIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeNativePlace != null">
+        employee_native_place = #{record.employeeNativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeDepartment != null">
+        employee_department = #{record.employeeDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeTel != null">
+        employee_tel = #{record.employeeTel,jdbcType=DOUBLE},
+      </if>
+      <if test="record.employeePost != null">
+        employee_post = #{record.employeePost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeEntrytime != null">
+        employee_entrytime = #{record.employeeEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.employeeWage != null">
+        employee_wage = #{record.employeeWage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.employeeRemark != null">
+        employee_remark = #{record.employeeRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update employee
+    set employee_id = #{record.employeeId,jdbcType=DOUBLE},
+      employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      employee_gender = #{record.employeeGender,jdbcType=VARCHAR},
+      employee_birth = #{record.employeeBirth,jdbcType=TIMESTAMP},
+      employee_ID_card = #{record.employeeIdCard,jdbcType=VARCHAR},
+      employee_native_place = #{record.employeeNativePlace,jdbcType=VARCHAR},
+      employee_department = #{record.employeeDepartment,jdbcType=VARCHAR},
+      employee_tel = #{record.employeeTel,jdbcType=DOUBLE},
+      employee_post = #{record.employeePost,jdbcType=VARCHAR},
+      employee_entrytime = #{record.employeeEntrytime,jdbcType=TIMESTAMP},
+      employee_wage = #{record.employeeWage,jdbcType=DOUBLE},
+      employee_remark = #{record.employeeRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fp.pojo.Employee">
+    update employee
+    <set>
+      <if test="employeeName != null">
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeGender != null">
+        employee_gender = #{employeeGender,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeBirth != null">
+        employee_birth = #{employeeBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employeeIdCard != null">
+        employee_ID_card = #{employeeIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNativePlace != null">
+        employee_native_place = #{employeeNativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeDepartment != null">
+        employee_department = #{employeeDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeTel != null">
+        employee_tel = #{employeeTel,jdbcType=DOUBLE},
+      </if>
+      <if test="employeePost != null">
+        employee_post = #{employeePost,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeEntrytime != null">
+        employee_entrytime = #{employeeEntrytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employeeWage != null">
+        employee_wage = #{employeeWage,jdbcType=DOUBLE},
+      </if>
+      <if test="employeeRemark != null">
+        employee_remark = #{employeeRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where employee_id = #{employeeId,jdbcType=DOUBLE}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fp.pojo.Employee">
+    update employee
+    set employee_name = #{employeeName,jdbcType=VARCHAR},
+      employee_gender = #{employeeGender,jdbcType=VARCHAR},
+      employee_birth = #{employeeBirth,jdbcType=TIMESTAMP},
+      employee_ID_card = #{employeeIdCard,jdbcType=VARCHAR},
+      employee_native_place = #{employeeNativePlace,jdbcType=VARCHAR},
+      employee_department = #{employeeDepartment,jdbcType=VARCHAR},
+      employee_tel = #{employeeTel,jdbcType=DOUBLE},
+      employee_post = #{employeePost,jdbcType=VARCHAR},
+      employee_entrytime = #{employeeEntrytime,jdbcType=TIMESTAMP},
+      employee_wage = #{employeeWage,jdbcType=DOUBLE},
+      employee_remark = #{employeeRemark,jdbcType=VARCHAR}
+    where employee_id = #{employeeId,jdbcType=DOUBLE}
+  </update>
+</mapper>

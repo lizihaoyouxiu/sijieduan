@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fp.dao.StaffWagesMapper" >
+  <resultMap id="BaseResultMap" type="com.fp.pojo.StaffWages" >
+    <id column="wid" property="wid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="state" property="state" jdbcType="SMALLINT" />
+    <result column="mid" property="mid" jdbcType="BIGINT" />
+    <result column="wage" property="wage" jdbcType="DOUBLE" />
+    <result column="taxrate" property="taxrate" jdbcType="DOUBLE" />
+    <result column="quickMoney" property="quickmoney" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    wid, uid, state, mid, wage, taxrate, quickMoney
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fp.pojo.StaffWagesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from staffwages
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from staffwages
+    where wid = #{wid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from staffwages
+    where wid = #{wid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fp.pojo.StaffWagesExample" >
+    delete from staffwages
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fp.pojo.StaffWages" >
+    insert into staffwages (wid, uid, state, 
+      mid, wage, taxrate, quickMoney
+      )
+    values (#{wid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{state,jdbcType=SMALLINT}, 
+      #{mid,jdbcType=BIGINT}, #{wage,jdbcType=DOUBLE}, #{taxrate,jdbcType=DOUBLE}, #{quickmoney,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fp.pojo.StaffWages" >
+    insert into staffwages
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wid != null" >
+        wid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="wage != null" >
+        wage,
+      </if>
+      <if test="taxrate != null" >
+        taxrate,
+      </if>
+      <if test="quickmoney != null" >
+        quickMoney,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wid != null" >
+        #{wid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="wage != null" >
+        #{wage,jdbcType=DOUBLE},
+      </if>
+      <if test="taxrate != null" >
+        #{taxrate,jdbcType=DOUBLE},
+      </if>
+      <if test="quickmoney != null" >
+        #{quickmoney,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fp.pojo.StaffWagesExample" resultType="java.lang.Integer" >
+    select count(*) from staffwages
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update staffwages
+    <set >
+      <if test="record.wid != null" >
+        wid = #{record.wid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=SMALLINT},
+      </if>
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=BIGINT},
+      </if>
+      <if test="record.wage != null" >
+        wage = #{record.wage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taxrate != null" >
+        taxrate = #{record.taxrate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.quickmoney != null" >
+        quickMoney = #{record.quickmoney,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update staffwages
+    set wid = #{record.wid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      state = #{record.state,jdbcType=SMALLINT},
+      mid = #{record.mid,jdbcType=BIGINT},
+      wage = #{record.wage,jdbcType=DOUBLE},
+      taxrate = #{record.taxrate,jdbcType=DOUBLE},
+      quickMoney = #{record.quickmoney,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fp.pojo.StaffWages" >
+    update staffwages
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="wage != null" >
+        wage = #{wage,jdbcType=DOUBLE},
+      </if>
+      <if test="taxrate != null" >
+        taxrate = #{taxrate,jdbcType=DOUBLE},
+      </if>
+      <if test="quickmoney != null" >
+        quickMoney = #{quickmoney,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where wid = #{wid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fp.pojo.StaffWages" >
+    update staffwages
+    set uid = #{uid,jdbcType=BIGINT},
+      state = #{state,jdbcType=SMALLINT},
+      mid = #{mid,jdbcType=BIGINT},
+      wage = #{wage,jdbcType=DOUBLE},
+      taxrate = #{taxrate,jdbcType=DOUBLE},
+      quickMoney = #{quickmoney,jdbcType=DOUBLE}
+    where wid = #{wid,jdbcType=BIGINT}
+  </update>
+</mapper>

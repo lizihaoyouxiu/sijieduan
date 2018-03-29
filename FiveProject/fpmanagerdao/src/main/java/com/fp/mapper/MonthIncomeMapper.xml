@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fp.dao.MonthIncomeMapper" >
+  <resultMap id="BaseResultMap" type="com.fp.pojo.MonthIncome" >
+    <id column="mid" property="mid" jdbcType="BIGINT" />
+    <result column="monthnoney" property="monthnoney" jdbcType="DOUBLE" />
+    <result column="allwages" property="allwages" jdbcType="DOUBLE" />
+    <result column="allmoney" property="allmoney" jdbcType="DOUBLE" />
+    <result column="month" property="month" jdbcType="VARCHAR" />
+    <result column="bid" property="bid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mid, monthnoney, allwages, allmoney, month, bid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fp.pojo.MonthIncomeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from monthincome
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from monthincome
+    where mid = #{mid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from monthincome
+    where mid = #{mid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fp.pojo.MonthIncomeExample" >
+    delete from monthincome
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fp.pojo.MonthIncome" >
+    insert into monthincome (mid, monthnoney, allwages, 
+      allmoney, month, bid)
+    values (#{mid,jdbcType=BIGINT}, #{monthnoney,jdbcType=DOUBLE}, #{allwages,jdbcType=DOUBLE}, 
+      #{allmoney,jdbcType=DOUBLE}, #{month,jdbcType=VARCHAR}, #{bid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fp.pojo.MonthIncome" >
+    insert into monthincome
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="monthnoney != null" >
+        monthnoney,
+      </if>
+      <if test="allwages != null" >
+        allwages,
+      </if>
+      <if test="allmoney != null" >
+        allmoney,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="bid != null" >
+        bid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="monthnoney != null" >
+        #{monthnoney,jdbcType=DOUBLE},
+      </if>
+      <if test="allwages != null" >
+        #{allwages,jdbcType=DOUBLE},
+      </if>
+      <if test="allmoney != null" >
+        #{allmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="bid != null" >
+        #{bid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fp.pojo.MonthIncomeExample" resultType="java.lang.Integer" >
+    select count(*) from monthincome
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update monthincome
+    <set >
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=BIGINT},
+      </if>
+      <if test="record.monthnoney != null" >
+        monthnoney = #{record.monthnoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.allwages != null" >
+        allwages = #{record.allwages,jdbcType=DOUBLE},
+      </if>
+      <if test="record.allmoney != null" >
+        allmoney = #{record.allmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.month != null" >
+        month = #{record.month,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bid != null" >
+        bid = #{record.bid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update monthincome
+    set mid = #{record.mid,jdbcType=BIGINT},
+      monthnoney = #{record.monthnoney,jdbcType=DOUBLE},
+      allwages = #{record.allwages,jdbcType=DOUBLE},
+      allmoney = #{record.allmoney,jdbcType=DOUBLE},
+      month = #{record.month,jdbcType=VARCHAR},
+      bid = #{record.bid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fp.pojo.MonthIncome" >
+    update monthincome
+    <set >
+      <if test="monthnoney != null" >
+        monthnoney = #{monthnoney,jdbcType=DOUBLE},
+      </if>
+      <if test="allwages != null" >
+        allwages = #{allwages,jdbcType=DOUBLE},
+      </if>
+      <if test="allmoney != null" >
+        allmoney = #{allmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="bid != null" >
+        bid = #{bid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fp.pojo.MonthIncome" >
+    update monthincome
+    set monthnoney = #{monthnoney,jdbcType=DOUBLE},
+      allwages = #{allwages,jdbcType=DOUBLE},
+      allmoney = #{allmoney,jdbcType=DOUBLE},
+      month = #{month,jdbcType=VARCHAR},
+      bid = #{bid,jdbcType=BIGINT}
+    where mid = #{mid,jdbcType=BIGINT}
+  </update>
+</mapper>
